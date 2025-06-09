@@ -88,10 +88,12 @@ export default function Footer() {
   return (
     <>
       {/* Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 z-50 origin-left"
-        style={{ scaleX }}
-      />
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 z-50 origin-left">
+        <motion.div
+          style={{ scaleX }}
+          className="w-full h-full"
+        />
+      </div>
 
       <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
         {/* Background Elements */}

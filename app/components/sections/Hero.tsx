@@ -8,32 +8,33 @@ import { RiRocketLine } from 'react-icons/ri';
 import Image from 'next/image';
 import Profile from '../../../public/profile.jpg';
 
+
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   // Scroll effects
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  
+
   // Typewriter effect
   const [titles] = useState([
     "Frontend Engineer",
-    "Blockchain Developer", 
+    "Blockchain Developer",
     "Full-Stack Developer",
     "Web3 Enthusiast"
   ]);
   const [titleIndex, setTitleIndex] = useState(0);
   const [displayedTitle, setDisplayedTitle] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  
+
   // Responsive state
   const [viewport, setViewport] = useState({
     width: 0,
@@ -49,7 +50,7 @@ export default function Hero() {
     const handleResize = () => {
       const width = typeof window !== 'undefined' ? window.innerWidth : 0;
       const height = typeof window !== 'undefined' ? window.innerHeight : 0;
-      
+
       setViewport({
         width,
         height,
@@ -58,7 +59,7 @@ export default function Hero() {
         isDesktop: width >= 1024
       });
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -67,10 +68,10 @@ export default function Hero() {
   // Typewriter effect
   useEffect(() => {
     if (!mounted) return;
-    
+
     const currentTitle = titles[titleIndex];
     const typeSpeed = isDeleting ? 50 : 120;
-    
+
     const timeout = setTimeout(() => {
       if (!isDeleting && displayedTitle === currentTitle) {
         setTimeout(() => setIsDeleting(true), 2000);
@@ -80,28 +81,28 @@ export default function Hero() {
         setTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);
         return;
       }
-      
-      setDisplayedTitle(prev => 
-        isDeleting 
-          ? prev.substring(0, prev.length - 1) 
+
+      setDisplayedTitle(prev =>
+        isDeleting
+          ? prev.substring(0, prev.length - 1)
           : currentTitle.substring(0, prev.length + 1)
       );
     }, typeSpeed);
-    
+
     return () => clearTimeout(timeout);
   }, [displayedTitle, isDeleting, titleIndex, titles, mounted]);
 
   // Advanced particle system
   useEffect(() => {
     if (!mounted || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     let particlesArray: any[] = [];
     let animationFrameId: number;
-    
+
     class Particle {
       x: number;
       y: number;
@@ -112,7 +113,7 @@ export default function Hero() {
       color: string;
       opacity: number;
       pulseSpeed: number;
-      
+
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
@@ -122,7 +123,7 @@ export default function Hero() {
         this.speedY = (Math.random() - 0.5) * 0.5;
         this.opacity = Math.random() * 0.5 + 0.3;
         this.pulseSpeed = Math.random() * 0.02 + 0.01;
-        
+
         const colors = [
           `rgba(59, 130, 246, ${this.opacity})`, // blue-500
           `rgba(139, 92, 246, ${this.opacity})`, // violet-500
@@ -130,19 +131,19 @@ export default function Hero() {
         ];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
-      
+
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        
+
         // Pulse effect
         this.size = this.baseSize + Math.sin(Date.now() * this.pulseSpeed) * 0.5;
-        
+
         // Bounce off edges
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
-      
+
       draw() {
         if (!ctx) return;
         ctx.fillStyle = this.color;
@@ -151,33 +152,33 @@ export default function Hero() {
         ctx.fill();
       }
     }
-    
+
     const init = () => {
       particlesArray = [];
       const particleCount = viewport.isMobile ? 30 : viewport.isTablet ? 50 : 80;
-      
+
       for (let i = 0; i < particleCount; i++) {
         particlesArray.push(new Particle());
       }
       setIsLoaded(true);
     };
-    
+
     const setCanvasSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       init();
     };
-    
+
     const connect = () => {
       if (!ctx) return;
       const maxDistance = viewport.isMobile ? 80 : 120;
-      
+
       for (let a = 0; a < particlesArray.length; a++) {
         for (let b = a; b < particlesArray.length; b++) {
           const dx = particlesArray[a].x - particlesArray[b].x;
           const dy = particlesArray[a].y - particlesArray[b].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          
+
           if (distance < maxDistance) {
             const opacity = (1 - distance / maxDistance) * 0.4;
             ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
@@ -190,25 +191,25 @@ export default function Hero() {
         }
       }
     };
-    
+
     const animate = () => {
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       particlesArray.forEach(particle => {
         particle.update();
         particle.draw();
       });
-      
+
       connect();
       animationFrameId = requestAnimationFrame(animate);
     };
-    
+
     setCanvasSize();
     animate();
-    
+
     window.addEventListener('resize', setCanvasSize);
-    
+
     return () => {
       window.removeEventListener('resize', setCanvasSize);
       cancelAnimationFrame(animationFrameId);
@@ -234,15 +235,15 @@ export default function Hero() {
   ];
 
   return (
-    <motion.section 
-    id="home"
+    <motion.section
+      id="home"
       ref={containerRef}
       style={{ opacity }}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
     >
       {/* Particle Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
-      
+
       {/* Background Elements */}
       <div className="absolute inset-0 z-10 opacity-40">
         <div className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 bg-blue-500/10 rounded-full blur-3xl" />
@@ -253,13 +254,13 @@ export default function Hero() {
       {/* Loading Screen */}
       <AnimatePresence>
         {!isLoaded && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
             className="absolute inset-0 bg-white dark:bg-slate-900 flex items-center justify-center z-50"
           >
-            <motion.div 
+            <motion.div
               className="w-16 h-16 border-4 border-t-blue-500 border-r-purple-500 border-b-emerald-500 border-l-transparent rounded-full"
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
@@ -271,7 +272,7 @@ export default function Hero() {
       {/* Main Content */}
       <div className="relative z-20  max-w-7xl mx-auto px-4 mt-24 container px-8 sm:px-8 lg:px-8 py-32">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          
+
           {/* Left Column - Text Content */}
           <motion.div
             style={{ y }}
@@ -340,8 +341,8 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 1.1 }}
               className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0"
             >
-              Final-year Computer Science student at the University of Ghana, 
-              building innovative solutions at the intersection of frontend excellence 
+              Final-year Computer Science student at the University of Ghana,
+              building innovative solutions at the intersection of frontend excellence
               and blockchain technology.
             </motion.p>
 
@@ -376,9 +377,7 @@ export default function Hero() {
               </motion.a>
 
               <motion.a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="https://drive.google.com/uc?export=download&id=1L-zlzcuKNqhk6zc3w0Y68e6_aLx94qDD"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="hidden lg:inline-flex items-center justify-center px-6 py-4 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-600 transition-all duration-300"
@@ -425,7 +424,7 @@ export default function Hero() {
             <div className="relative w-full max-w-sm">
               {/* Main Card */}
               <div className="relative bg-white dark:bg-slate-800 rounded-3xl p-8 border  lg:h-120 lg:mr-[-6rem] border-slate-200/50 dark:border-slate-700/50 backdrop-blur-sm">
-                
+
                 {/* Avatar */}
                 <motion.div
                   whileHover={{ scale: 1.06 }}
@@ -451,7 +450,7 @@ export default function Hero() {
                   <p className="text-slate-600 dark:text-slate-400 font-medium mb-4">
                     Frontend & Blockchain Developer
                   </p>
-                  
+
                   {/* Skills */}
                   <div className="flex flex-wrap justify-center gap-2 mb-4">
                     {skills.map((skill, index) => (
@@ -470,7 +469,7 @@ export default function Hero() {
                       </motion.div>
                     ))}
                   </div>
-                  
+
                   {/* Rating */}
                   <div className="flex items-center justify-center gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
@@ -503,24 +502,24 @@ export default function Hero() {
 
               {/* Floating Elements */}
               <motion.div
-                animate={{ 
+                animate={{
                   y: [0, -10, 0],
                   rotate: [0, 5, 0]
                 }}
-                transition={{ 
+                transition={{
                   repeat: Infinity,
                   duration: 6,
                   ease: "easeInOut"
                 }}
                 className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-xl backdrop-blur-sm"
               />
-              
+
               <motion.div
-                animate={{ 
+                animate={{
                   y: [0, 10, 0],
                   rotate: [0, -5, 0]
                 }}
-                transition={{ 
+                transition={{
                   repeat: Infinity,
                   duration: 8,
                   ease: "easeInOut",

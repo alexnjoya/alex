@@ -25,7 +25,9 @@ const projects: Project[] = [
     image: '/images/projects/tally.jpg',
     tags: ['Solidity', 'React', 'Ethereum', 'Web3.js', 'Smart Contracts'],
     category: 'Blockchain',
-    githubLink: 'https://github.com/alexnjoya/tally',
+    githubLink: 'https://github.com/alexnjoya/tally-client.git',
+    liveLink: 'https://tally-client-phi.vercel.app/app/dashboard',
+
     featured: true,
   },
   {
@@ -35,7 +37,9 @@ const projects: Project[] = [
     image: '/images/projects/adwumapa.jpg',
     tags: ['Solidity', 'Next.js', 'Hardhat', 'Tailwind CSS', 'Blockchain'],
     category: 'Blockchain',
-    githubLink: 'https://github.com/alexnjoya/adwumapa',
+    githubLink: 'https://github.com/alexnjoya/blockgigs.git',
+    liveLink: 'https://blockgigs-nextjs-two.vercel.app/',
+
     featured: true,
   },
   {
@@ -46,41 +50,39 @@ const projects: Project[] = [
     tags: ['TypeScript', 'Next.js', 'Node.js', 'AI/ML', 'MongoDB'],
     category: 'Web',
     githubLink: 'https://github.com/alexnjoya/finetun-ai',
-    liveLink: 'https://finetun.ai',
+    liveLink: 'https://finetunai.com',
     featured: true,
   },
   {
     id: 4,
-    title: 'Personal Portfolio Website',
+    title: 'Melanin Connect',
     description: 'My personal portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features a responsive design, dark mode, and animations powered by Framer Motion.',
     image: '/images/projects/portfolio.jpg',
     tags: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
     category: 'Web',
-    githubLink: 'https://github.com/alexnjoya/portfolio',
-    liveLink: 'https://alexnjoya.dev',
-  },
-   {
-    id: 6,
-    title: 'Personal Portfolio Website',
-    description: 'My personal portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features a responsive design, dark mode, and animations powered by Framer Motion.',
-    image: '/images/projects/portfolio.jpg',
-    tags: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
-    category: 'Web',
-    githubLink: 'https://github.com/alexnjoya/portfolio',
-    liveLink: 'https://alexnjoya.dev',
+    githubLink: 'https://github.com/alexnjoya/melanin-frontend.git',
+    liveLink: 'https://www.melaninconnect.xyz/',
   },
   {
     id: 5,
-    title: 'Personal Portfolio Website',
-    description: 'My personal portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features a responsive design, dark mode, and animations powered by Framer Motion.',
+    title: 'Melanin Dashboard',
+    description: 'Melanin admin dashboard  built with Next.js, TypeScript, and Tailwind CSS. Features a responsive design, dark mode, and animations powered by Framer Motion.',
     image: '/images/projects/portfolio.jpg',
     tags: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
     category: 'Web',
-    githubLink: 'https://github.com/alexnjoya/portfolio',
-    liveLink: 'https://alexnjoya.dev',
+    githubLink: 'https://github.com/alexnjoya/melanin-admin.git',
+    liveLink: 'https://melanin-admin.vercel.app/',
+  },
+  {
+    id: 6,
+    title: 'Afri Remit - Cross-Border Payment Platform',
+    description: 'A cross-border payment platform Built with Next.js, TypeScript, and Tailwind CSS.',
+    image: '/images/projects/portfolio.jpg',
+    tags: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+    category: 'Web',
+    githubLink: 'https://github.com/alexnjoya/afriremit.git',
+    liveLink: 'https://afriremit.vercel.app/',
   }
-  
-  
 ];
 
 export default function Projects() {
@@ -122,7 +124,7 @@ export default function Projects() {
   };
 
   return (
-    <section  id="projects" className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+    <section id="projects" className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -159,14 +161,14 @@ export default function Projects() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex justify-center mb-16"
           >
-            <div className="flex bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-2  border border-slate-200/50 dark:border-slate-700/50">
+            <div className="flex bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-2 border border-slate-200/50 dark:border-slate-700/50">
               {filters.map(filter => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`relative px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                     activeFilter === filter
-                      ? 'text-white '
+                      ? 'text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
@@ -201,7 +203,7 @@ export default function Projects() {
                     onHoverEnd={() => setHoveredProject(null)}
                     className="group relative"
                   >
-                    <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-3xl p-8  border border-slate-200/50 dark:border-slate-700/50 hover:l transition-all duration-500 overflow-hidden">
+                    <div className="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 dark:border-slate-700/50 hover:shadow-xl transition-all duration-500 overflow-hidden">
                       {/* Project Image/Icon */}
                       <div className="relative h-48 mb-6 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center">
@@ -275,12 +277,12 @@ export default function Projects() {
 
                       {/* Hover effect */}
                       <motion.div
-                        className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute bottom-4 right-4 opacity-0 cursor-pointer group-hover:opacity-100 transition-opacity duration-300"
                         initial={{ x: 10 }}
                         animate={{ x: hoveredProject === project.id ? 0 : 10 }}
                       >
-                        <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium">
-                          <span className="text-sm">View Project</span>
+                        <div className="flex cursor-pointer items-center gap-2 text-blue-600 dark:text-blue-400 font-medium">
+                          <span className="cursor-pointer text-sm">View Project</span>
                           <FaArrowRight size={14} />
                         </div>
                       </motion.div>
@@ -298,7 +300,7 @@ export default function Projects() {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="text-center mt-20"
           >
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl font-medium hover: transition-all duration-300 hover:scale-105">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer">
               <span>View All Projects</span>
               <FaArrowRight size={16} />
             </div>

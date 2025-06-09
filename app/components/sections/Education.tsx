@@ -314,12 +314,7 @@ export default function Education() {
                                   {education.location}
                                 </div>
                               )}
-                              {education.gpa && (
-                                <div className="flex items-center gap-2">
-                                  <FaTrophy className="text-yellow-500" />
-                                  GPA: {education.gpa}
-                                </div>
-                              )}
+                             
                             </div>
                           </div>
                         </div>
