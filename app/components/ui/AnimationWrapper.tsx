@@ -3,11 +3,10 @@
 import { ReactNode } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import * as animations from '../../lib/animations';
 
 interface AnimationWrapperProps {
   children: ReactNode;
-  animation?: keyof typeof animations;
+  animation?: 'fadeIn' | 'slideIn' | 'scaleIn' | 'staggerContainer';
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
   delay?: number;
   duration?: number;
@@ -15,6 +14,87 @@ interface AnimationWrapperProps {
   once?: boolean;
   threshold?: number;
 }
+
+// Define animation functions directly in the component
+const animationVariants = {
+  fadeIn: (
+    direction: 'up' | 'down' | 'left' | 'right' | 'none' = 'none',
+    delay: number = 0,
+    duration: number = 0.5
+  ): Variants => ({
+    hidden: {
+      opacity: 0,
+      y: direction === 'up' ? 20 : direction === 'down' ? -20 : 0,
+      x: direction === 'left' ? 20 : direction === 'right' ? -20 : 0,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration,
+        delay,
+        ease: "easeOut",
+      },
+    },
+  }),
+
+  slideIn: (
+    direction: 'up' | 'down' | 'left' | 'right' | 'none' = 'left',
+    delay: number = 0,
+    duration: number = 0.5
+  ): Variants => ({
+    hidden: {
+      x: direction === 'left' ? -100 : direction === 'right' ? 100 : 0,
+      y: direction === 'up' ? 100 : direction === 'down' ? -100 : 0,
+      opacity: 0,
+    },
+    visible: {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration,
+        delay,
+        ease: "easeOut",
+      },
+    },
+  }),
+
+  scaleIn: (
+    direction: 'up' | 'down' | 'left' | 'right' | 'none' = 'none',
+    delay: number = 0,
+    duration: number = 0.5
+  ): Variants => ({
+    hidden: {
+      scale: 0,
+      opacity: 0,
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration,
+        delay,
+        ease: "easeOut",
+      },
+    },
+  }),
+
+  staggerContainer: (
+    direction: 'up' | 'down' | 'left' | 'right' | 'none' = 'none',
+    delay: number = 0,
+    duration: number = 0.5
+  ): Variants => ({
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: delay,
+      },
+    },
+  }),
+};
 
 export default function AnimationWrapper({
   children,
@@ -31,16 +111,10 @@ export default function AnimationWrapper({
     threshold,
   });
 
-  // Get animation variant from animations library
+  // Get animation variant
   const getAnimationVariant = (): Variants => {
-    const animationFn = animations[animation];
-    
-    if (typeof animationFn === 'function') {
-      return animationFn(direction, delay, duration);
-    }
-    
-    // Default to fadeIn if animation not found
-    return animations.fadeIn(direction, delay, duration);
+    const animationFn = animationVariants[animation];
+    return animationFn(direction, delay, duration);
   };
 
   const variant = getAnimationVariant();
