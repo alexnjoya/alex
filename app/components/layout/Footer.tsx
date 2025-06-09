@@ -88,11 +88,10 @@ export default function Footer() {
   return (
     <>
       {/* Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 z-50 origin-left">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-50">
         <motion.div
           style={{ scaleX }}
-          className="w-full h-full"
-          // @ts-expect-error
+          className="w-full h-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 origin-left"
         />
       </div>
 
@@ -262,7 +261,7 @@ export default function Footer() {
                 className="mt-6 p-4 bg-green-500/10 border border-green-500/20 rounded-2xl"
               >
                 <div className="flex items-center gap-2 text-green-400 mb-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full" />
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                   <span className="font-semibold">Available for work</span>
                 </div>
                 <p className="text-slate-400 text-sm">
@@ -326,7 +325,7 @@ export default function Footer() {
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.9 }}
               onClick={scrollToTop}
-              className="fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl transition-all duration-300 group"
+              className="fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl shadow-2xl transition-all duration-300 group"
               aria-label="Scroll to top"
             >
               <FaArrowUp className="text-lg group-hover:animate-bounce" />
