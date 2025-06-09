@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaGraduationCap, FaCalendarAlt, FaCertificate, FaUniversity, FaBookOpen, FaAward, FaTrophy, FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -13,7 +13,7 @@ type Education = {
   degree: string;
   period: string;
   description?: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
   type: 'university' | 'bootcamp' | 'certification';
   gpa?: string;
   achievements?: string[];
@@ -154,7 +154,7 @@ export default function Education() {
   };
 
   return (
-    <section  id="education" className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+    <section id="education" className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 left-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -192,22 +192,22 @@ export default function Education() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 max-w-4xl mx-auto"
           >
-            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 ">
+            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
               <FaGraduationCap className="text-3xl text-blue-500 mx-auto mb-2" />
               <div className="text-3xl font-bold text-slate-800 dark:text-slate-200">{educations.length}</div>
               <div className="text-sm text-slate-600 dark:text-slate-400">Programs</div>
             </div>
-            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 ">
+            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
               <FaTrophy className="text-3xl text-purple-500 mx-auto mb-2" />
               <div className="text-3xl font-bold text-slate-800 dark:text-slate-200">{totalAchievements}+</div>
               <div className="text-sm text-slate-600 dark:text-slate-400">Achievements</div>
             </div>
-            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 ">
+            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
               <FaBookOpen className="text-3xl text-green-500 mx-auto mb-2" />
               <div className="text-3xl font-bold text-slate-800 dark:text-slate-200">{totalSkills}+</div>
               <div className="text-sm text-slate-600 dark:text-slate-400">Skills Learned</div>
             </div>
-            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 ">
+            <div className="text-center p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
               <FaCalendarAlt className="text-3xl text-orange-500 mx-auto mb-2" />
               <div className="text-3xl font-bold text-slate-800 dark:text-slate-200">{totalYears}+</div>
               <div className="text-sm text-slate-600 dark:text-slate-400">Years</div>
@@ -221,14 +221,14 @@ export default function Education() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex justify-center mb-16"
           >
-            <div className="flex gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-2  border border-slate-200/50 dark:border-slate-700/50">
+            <div className="flex gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-2 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
               {filters.map(filter => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`relative px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                     activeFilter === filter
-                      ? 'text-white '
+                      ? 'text-white'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
@@ -278,7 +278,7 @@ export default function Education() {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: index * 0.2 + 0.5, type: "spring", stiffness: 200 }}
-                        className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${typeConfig[education.type].gradient} flex items-center justify-center text-white  border-4 border-white dark:border-slate-800`}
+                        className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${typeConfig[education.type].gradient} flex items-center justify-center text-white shadow-lg border-4 border-white dark:border-slate-800`}
                       >
                         {education.icon}
                       </motion.div>
@@ -286,7 +286,7 @@ export default function Education() {
 
                     {/* Content Card */}
                     <div className={`ml-20 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'} w-full`}>
-                      <div className={`bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl p-8 l border border-slate-200/50 dark:border-slate-700/50 hover:l transition-all duration-500 ${index % 2 === 0 ? 'md:ml-0' : 'md:mr-0'}`}>
+                      <div className={`bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-2xl transition-all duration-500 ${index % 2 === 0 ? 'md:ml-0' : 'md:mr-0'}`}>
                         {/* Header */}
                         <div className="flex items-start justify-between mb-6">
                           <div className="flex-1">
@@ -314,7 +314,6 @@ export default function Education() {
                                   {education.location}
                                 </div>
                               )}
-                             
                             </div>
                           </div>
                         </div>
@@ -332,7 +331,7 @@ export default function Education() {
                               {education.skills.map((skill, idx) => (
                                 <span 
                                   key={idx} 
-                                  className={`px-3 py-1.5 text-sm font-medium rounded-xl bg-gradient-to-r ${typeConfig[education.type].gradient} text-white `}
+                                  className={`px-3 py-1.5 text-sm font-medium rounded-xl bg-gradient-to-r ${typeConfig[education.type].gradient} text-white shadow-sm`}
                                 >
                                   {skill}
                                 </span>
@@ -390,7 +389,7 @@ export default function Education() {
             transition={{ duration: 0.6, delay: 1.2 }}
             className="text-center mt-20"
           >
-            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-medium  hover:scale-105 transition-all duration-300">
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-medium shadow-lg hover:scale-105 transition-all duration-300">
               <FaGraduationCap className="text-xl" />
               <span>Continuous Learning & Growth</span>
             </div>
