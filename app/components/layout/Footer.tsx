@@ -1,12 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaArrowUp, FaMapMarkerAlt, FaPhone, FaHeart, FaCode, FaRocket } from 'react-icons/fa';
 
 export default function Footer() {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [mounted, setMounted] = useState(false);
+  
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -80,6 +87,14 @@ export default function Footer() {
 
   return (
     <>
+      {/* Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-50">
+        <motion.div
+          style={{ scaleX } as any}
+          className="w-full h-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 origin-left"
+        />
+      </div>
+
       <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 opacity-20">
