@@ -36,39 +36,11 @@ export default function AnimationWrapper({
     const animationFn = animations[animation];
     
     if (typeof animationFn === 'function') {
-      // Check if the function accepts parameters
-      try {
-        // Try calling with parameters first
-        return animationFn(direction, delay, duration);
-      } catch {
-        // If it fails, try calling without parameters
-        try {
-          return animationFn(delay, duration);
-        } catch {
-          // If it still fails, call with no parameters
-          return animationFn();
-        }
-      }
+      return animationFn(direction, delay, duration);
     }
     
-    // Default fallback animation
-    return {
-      hidden: { 
-        opacity: 0,
-        y: direction === 'up' ? 20 : direction === 'down' ? -20 : 0,
-        x: direction === 'left' ? 20 : direction === 'right' ? -20 : 0
-      },
-      visible: { 
-        opacity: 1,
-        y: 0,
-        x: 0,
-        transition: {
-          duration,
-          delay,
-          ease: "easeOut"
-        }
-      }
-    };
+    // Default to fadeIn if animation not found
+    return animations.fadeIn(direction, delay, duration);
   };
 
   const variant = getAnimationVariant();
