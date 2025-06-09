@@ -92,6 +92,7 @@ export default function Footer() {
         <motion.div
           style={{ scaleX }}
           className="w-full h-full"
+          // @ts-expect-error
         />
       </div>
 
